@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     marginRight: 5,
-    backgroundColor: '#ffffff',
+    backgroundColor: 'white',
   },
 });
 
