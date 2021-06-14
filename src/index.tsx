@@ -30,6 +30,7 @@ interface PropTypes {
   activeBorderColor?: string;
   passiveBorderColor?: string;
   fontFamily?: string;
+  customBackgroundColor: string;
 }
   
 interface CommonAnimatedPropsTypes {
@@ -43,6 +44,7 @@ interface LabelStylePropTypes {
   initialTopValue: number;
   activeLabelColor: string;
   passiveLabelColor: string;
+  textBackground?: string
 }
   
 interface InputStyleProps {
@@ -54,6 +56,7 @@ interface InputStyleProps {
   passiveBorderColor: string;
   activeValueColor:string;
   passiveValueColor:string;
+  
 }
   
 const OutlineInput = ({
@@ -73,6 +76,7 @@ const OutlineInput = ({
   activeBorderColor = '#51AD56',
   passiveBorderColor = '#EFEFEF',
   fontFamily = 'System',
+  customBackgroundColor = '#ffffff',
 }: PropTypes) => {
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const lineHeightValue: number = fontSize + 2;
@@ -183,6 +187,7 @@ const OutlineInput = ({
     fontSize: inputValueFontSize,
     activeBorderColor,
     passiveBorderColor,
+    
     style: [
       { fontFamily },
       InputStyle({
@@ -194,12 +199,13 @@ const OutlineInput = ({
         passiveBorderColor,
         activeValueColor,
         passiveValueColor,
+        
       }),
     ],
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container,{backgroundColor: customBackgroundColor}]}>
       <Animated.View {...animatedViewProps}>
         <Animated.Text {...animatedTextProps}>{label}</Animated.Text>
         </Animated.View>
@@ -213,11 +219,12 @@ const LabelStyle = ({
   initialTopValue,
   activeLabelColor,
   passiveLabelColor,
+  textBackground,
 }: LabelStylePropTypes) => ({
   fontStyle: 'normal',
   fontWeight: 'normal',
   color: isFocused ? activeLabelColor : passiveLabelColor,
-  backgroundColor: '#FFFFFF',
+  backgroundColor: textBackground? textBackground :  '#ffffff',
   paddingRight: 5,
   paddingLeft: 5,
   top: initialTopValue,
@@ -240,6 +247,7 @@ const InputStyle = ({
   passiveBorderColor,
   activeValueColor,
   passiveValueColor,
+  textBackground
 }: InputStyleProps) => ({
   padding,
   height,
@@ -248,6 +256,7 @@ const InputStyle = ({
   borderColor: isFocused ? activeBorderColor : passiveBorderColor,
   borderRadius: 6,
   color: isFocused ? activeValueColor : passiveValueColor,
+  textBackground: textBackground ? textBackground : '#ffffff',
 });
 
 export default memo(OutlineInput);
